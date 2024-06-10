@@ -1,3 +1,5 @@
+//Printing nQueens Solution is possible or not if yes then print only one solution out of all
+
 package DSA.Backtracking;
 
 public class nQueensOneSol {
