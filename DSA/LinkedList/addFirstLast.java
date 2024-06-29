@@ -1,6 +1,6 @@
 package DSA.LinkedList;
 
-public class addFirstLast{
+public class removeFirstLast {
     public static class Node{
         int data;
         Node next;
@@ -8,36 +8,54 @@ public class addFirstLast{
         public Node(int data){
             this.data = data;
             this.next = null;
-
         }
 
     }
     public static Node head;
     public static Node tail;
+    public static int size;
     public void addFirst(int data){
-        //1.create new node
         Node newNode = new Node(data);
-        //2. check null 
+        size++;
+
+        if(head == null){
+            head = tail = newNode;
+            return;
+
+        }
+        newNode.next =head;
+        head = newNode;
+    }
+    public void addLast(int data){
+        Node newNode = new Node(data);
+        size++;
         if(head == null){
             head = tail = newNode;
             return;
         }
-        //3.assign next to head
-        newNode.next = head;
-        //4.assign head to new node
-        head = newNode;
+        tail.next = newNode;
+        tail = newNode;
     }
-    public void addLast(int data){
-        Node newNode1 = new Node(data);
-        if(head == null){
-            head = tail = newNode1;
+    public void addMid(int idx, int data){
+        if ( idx == 0){
+            addFirst(data);
             return;
         }
-        tail.next = newNode1;
-        tail = newNode1;
+        Node newNode = new Node(data);
+        size++;
+
+        Node temp = head;
+        int i = 0;
+
+        while(i < idx-1){
+            temp = temp.next;
+            i++;
+        }
+        newNode.next = temp.next;
+        temp.next = newNode;
         
     }
-    public void print(){
+    public void print(){//methods
         Node temp = head;
         while(temp != null){
             System.out.print(temp.data+"->");
@@ -46,20 +64,68 @@ public class addFirstLast{
         System.out.println("null");
     }
 
+    public int removeFirst(){
+        if(size == 0){
+            System.out.println("ll is mt");
+            return Integer.MIN_VALUE;
+
+        }else if(size == 1){
+            int val = head.data;
+            head = tail = null;
+            size--;
+            return val;
+        }
+        int val = head.data;
+        size--;
+        head =head.next;
+        return val;
+    }
+    public int removeLast(){
+        if(size == 0){
+            System.out.println("LL is mt");
+            return Integer.MIN_VALUE;
+        }else if(size == 1){
+            int val = head.data;
+            head = tail = null;
+            size--;
+            return val;
+        }
+        //privios size-2
+        Node temp = head;
+        for(int i = 0; i < size-2; i++){
+            temp = temp.next;
+
+        }
+        int val = tail.data;
+        temp.next = null;
+        tail = temp;
+        size--;
+        return val;
+    }
     public static void main(String[] args) {
-        addFirstLast ll = new addFirstLast();
+        removeFirstLast ll = new removeFirstLast();
         ll.print();
         ll.addFirst(2);
         ll.print();
+
         ll.addFirst(1);
         ll.print();
+
         ll.addLast(3);
         ll.print();
+
         ll.addLast(4);
         ll.print();
 
+        ll.addMid(3, 9);
+        ll.print();
 
-        //1(head)->2->3->4(tail)
-        
+        ll.removeFirst();
+        ll.print();
+        System.out.println(ll.size);
+        ll.removeLast();
+        ll.print();
+        System.out.println(ll.size);
+
     }
 }
